@@ -10,7 +10,8 @@
 ## ODD ASSIGNMENT
     
 ## PROJECT PROPOSAL
-    Our project subject is  Statistic of Housing Sales.You can reach data set that we will use in project [Data Link](http://www.tuik.gov.tr/PreTablo.do?alt_id=1056 ) 
+    Our project subject is  Statistic of Housing Sales.You can reach data set that we will use in project 
+    [Data Link] (http://www.tuik.gov.tr/PreTablo.do?alt_id=1056 ) 
     We will share our data analysis as caring of the below divides.
     
             -Other house sales in detail of first sale and second hand sale by provinces and years, 2013-2019 
