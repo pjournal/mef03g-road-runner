@@ -7,9 +7,9 @@
     -Gökhan Koca
     -Tuğçe Aydın
     
-### You can find Odd Assignment details below
+## ODD ASSIGNMENT
     
-### TERM PROJECT DETAIL
+## TERM PROJECT 
 
    ## PROJECT PROPOSAL
    
