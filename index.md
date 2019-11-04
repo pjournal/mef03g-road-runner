@@ -1,29 +1,31 @@
-## Welcome to GitHub Pages
+## Welcome to Road RunneR's Project Page 
 
-You can use the [editor on GitHub](https://github.com/pjournal/mef03g-road-runner/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+## Group Member 
+    -Bilgehan Kıran Çelebi
+    -Emre Usta
+    -Erkan Tekingül
+    -Gökhan Koca
+    -Tuğçe Aydın
+    
+### You can find Odd Assignment details below
+    
+### TERM PROJECT DETAIL
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+   ## PROJECT PROPOSAL
+   
+   Our project subject is  Statistic of Housing Sales.
+   You can reach data set that we will use in project [Data Link](http://www.tuik.gov.tr/PreTablo.do?alt_id=1056 )
+   We will share our data analysis as caring of the below divides.
+        •	House Sales by Provinces and Years, 2008-2012
+        •	Other house sales in detail of first sale and second hand sale by provinces and years, 2013-2019 
+        •	House sales by districts, 2015  - 2018 
+        •	House Sales by Provinces and Years, 2008-2012
+        •	House sales numbers to foreigners, 2013-2019
+        •	House sales numbers to foreigners by nationalities, 2015-2019
+        •	Mortgaged house sales in detail of first sale and second hand sale by provinces and years, 2013-2019
+        •	House sales in detail of first sale and second hand sale by provinces and years, 2013-2019
+        •	House sales in detail of genders by provinces, 2014 - 2018
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
 ```
 
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
