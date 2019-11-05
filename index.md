@@ -1,4 +1,4 @@
-## Welcome to Road RunneR's Project Page 
+### Welcome to Road RunneR's Project Page 
 
 ## Group Members 
     -Bilgehan Kıran Çelebi
@@ -9,10 +9,11 @@
     
 ## ODD ASSIGNMENT
 
+[Retail Car Sales Analysis](ODD_Assignment.html)
 
 ## FINAL PROJECT 
 
-## Project Proposal
+### Project Proposal
 
 We decided to make our exploration on the Housing Sales data of Turkey. We have contacted with TUIK-Turkish Statistical Institute with your advice for obtaining a better formatted data set than the ones on their internet site.  
 What our aim is to inspect the housing sales data for at least the last 3 years with price, mortgage credits information, demographical information about the buyer and the province information as the city, district and the neighborhood.    
@@ -23,13 +24,13 @@ Variables will be as following:
 - House sales in detail of genders
 - House sales in detail of nationality
 
-## Learning Objectives
+### Learning Objectives
 - Giving the data a valuable shape for analyzing.
 - Inspecting data according to  province information.
 - Visualizing data according to  demographical information.
 - Analyzing data according to different time periods 
 
-## Analysis Objectives
+### Analysis Objectives
 - Finding the provinces where the most number of sale is made, the average of sales over time periods.
 - Analyzing the sale prices in provinces and group them by giving intervals.
 - Analyzing the province preference by nationality. 
