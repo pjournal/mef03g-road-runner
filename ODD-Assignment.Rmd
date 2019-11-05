@@ -1,0 +1,168 @@
+---
+title: "ODD-Assignment"
+author: "road-runner"
+date: "11/1/2019"
+output: rmarkdown::github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+
+```{r set-options, echo=FALSE, cache=FALSE, warning=FALSE}
+options(width = 150)
+```
+
+## 1.Introduction and Preparation
+
+ODD(Automotive Distributers’ Association) is an organization that has 29 members that represent 47 international brands worlwide. ODD has the vision of providing the continuity and improvement of automotive sector as having the international competitive capacity within the concept of modernity, environmental awareness and social responsibility
+
+The dataset we used in this analysis from ODD includes retail sales of automobiles and commercial vehicles which are both domestic and imported in Turkey.
+
+Column names and explanations are below
+
+<ol type = "1">
+<li>brand_name: Brand of the car</li>
+<li>auto_dom: Total number of sales for domestic automobiles</li>
+<li>auto_imp: Total number of sales for imported automobiles</li>
+<li>auto_total: Total number of sales for both domestic and imported automobiles</li>
+<li>comm_dom: Total number of sales for domestic commercial vehicles</li>
+<li>comm_imp: Total number of sales for imported commercial vehicles</li>
+<li>comm_total: Total number of sales for both domestic and imported commercial vehicles</li>
+<li>total_dom: Total number of sales for both domestic automobiles and commercial vehicles </li>
+<li>total_imp: Total number of sales for both imported automobiles and commercial vehicles</li>
+<li>total_total: Total Total number of sales</li>
+<li>year</li>
+<li>month</li>
+</ol>
+
+
+
+```{r download, warning=FALSE}
+raw_data_full <- ''
+
+# Creating a list including all csv names to use in for loop
+list_all <- c('201601','201602','201603','201604','201605','201606','201607','201608','201609','201610','201611','201612'
+              ,'201701','201702','201703','201704','201705','201706','201707','201708','201709','201710','201711','201712'
+              ,'201801','201802','201803','201804','201805','201806','201807','201808','201809','201810','201811','201812')
+
+for (i in 1:length(list_all)) {
+    
+  file_url<- paste('https://github.com/pjournal/mef03g-road-runner/blob/master/ODD-Data/', list_all[i],'.csv?raw=true', sep='')
+  
+  print(file_url)
+  
+  # Reading csv from the url
+  raw_data <- read.csv(file_url,sep=',',header=F)
+  
+  # Replacing NA values with 0 and label the time period with year and month, so when data is merged the data there won't be any confusion.
+  raw_data <- 
+    raw_data %>%
+    mutate_if(is.numeric,funs(ifelse(is.na(.),0,.))) %>% 
+    mutate(yearmonth=list_all[i])
+  
+  # Appending raw_data_full into raw_data_full for each iteration
+  raw_data_full<-rbind(raw_data_full,raw_data)
+  
+}
+
+# Adding column names to raw_data_full
+colnames(raw_data_full) <- c('brand_name','auto_dom','auto_imp','auto_total','comm_dom','comm_imp','comm_total','total_dom','total_imp','total_total','yearmonth')
+
+raw_data_full <- raw_data_full %>% slice(-c(1))
+```
+
+
+## 2.Analysis
+
+### 2.1.Category
+
+```{r category}
+df_category <-
+raw_data_full %>%
+  select(yearmonth,auto_total,comm_total,total_total) %>%
+  filter(substr(yearmonth,1,4) == 2018) %>%
+  group_by(substr(yearmonth,1,4)) %>%
+  summarise(auto = sum(as.numeric((gsub(",","",auto_total))),na.rm = T),
+            comm = sum(as.numeric((gsub(",","",comm_total))),na.rm = T),
+            total = sum(as.numeric((gsub(",","",total_total))),na.rm = T))
+
+df_category
+
+#Creating a column Category to transpose the values
+pie_category <- data.frame(Category = c("auto","commercial"), freq=c(df_category$auto,df_category$comm))
+
+ggplot(pie_category, aes (x="", y = freq, fill = factor(Category))) + 
+  geom_col(position = 'stack', width = 1) +
+  geom_text(aes(label = paste(round(freq / sum(freq) * 100, 1), "%"), x = 1.3),
+            position = position_stack(vjust = 0.5)) +
+  theme_classic() +
+  theme(plot.title = element_text(hjust=0.5),
+        axis.line = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank()) +
+  labs(fill = "Category",
+       x = NULL,
+       y = NULL,
+       title = "Distribution of Retail Sales Auto/ Light Commercial Vehicles for 2018") + 
+  coord_polar("y")
+```
+
+
+### 2.2.Locality
+
+```{r locality}
+df_locality <-
+  raw_data_full %>% 
+  select(yearmonth,total_dom,total_imp,total_total) %>%
+  filter(substr(yearmonth,1,4) == 2018) %>%
+  group_by(substr(yearmonth,1,4)) %>%
+  summarise(domestic = sum(as.numeric((gsub(",","",total_dom))),na.rm = T),
+          import = sum(as.numeric((gsub(",","",total_imp))),na.rm = T),
+          total = sum(as.numeric((gsub(",","",total_total))),na.rm = T))
+
+df_locality
+
+#Creating a column Locality to transpose the values
+pie_locality <- data.frame(Locality = c("domestic","import"), freq=c(df_locality$domestic,df_locality$import))
+
+ggplot(pie_locality, aes (x="", y = freq, fill = factor(Locality))) + 
+  geom_col(position = 'stack', width = 1) +
+  geom_text(aes(label = paste(round(freq / sum(freq) * 100, 1), "%"), x = 1.3),
+            position = position_stack(vjust = 0.5)) +
+  theme_classic() +
+  theme(plot.title = element_text(hjust=0.5),
+        axis.line = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank()) +
+  labs(fill = "Locality",
+       x = NULL,
+       y = NULL,
+       title = "Distribution of Retail Sales Domestic/Imported Vehicles for 2018") + 
+  coord_polar("y")
+```
+
+
+### 2.3.Top5
+
+```{r top5}
+df_top5 <-
+  raw_data_full %>%
+  group_by(substr(yearmonth,1,4),brand_name) %>%
+  filter(substr(yearmonth,1,4) == 2017) %>%
+  summarise(total = sum(as.numeric((gsub(",","",total_total))),na.rm = T)) %>%
+  arrange(desc(total)) %>%
+  mutate(rwn = row_number()) %>%
+  filter(rwn < 6)
+
+df_top5
+
+ggplot(df_top5, aes(x=brand_name, y=total, fill=brand_name))+
+  geom_bar(stat="identity")+
+  geom_text(aes(label=total), vjust=1.6, color="black", size=3.5)+
+  theme_minimal()+
+  labs(x="Brand Name",y="# of Sales",title="5 Most Selling Car Brands for 2017",fill="Brand")+
+  theme(axis.text.x = element_text(angle=30))
+```
