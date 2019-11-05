@@ -9,7 +9,7 @@
     
 ### ODD ASSIGNMENT
 
-[Retail Car Sales Analysis][ODD_Assignment.html]
+[Retail Car Sales Analysis](ODD_Assignment.html)
 
 
 ### FINAL PROJECT 
