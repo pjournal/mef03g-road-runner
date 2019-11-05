@@ -11,7 +11,6 @@
 
 [Retail Car Sales Analysis](ODD_Assignment.html)
 
-
 ## FINAL PROJECT 
 
 ### Project Proposal
