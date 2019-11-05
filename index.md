@@ -8,6 +8,7 @@
     -Tuğçe Aydın
     
 ## ODD ASSIGNMENT
+[Retail Car Sales Analysis](road-runner_ODD-Assignment.html)
 
 ## FINAL PROJECT 
 
