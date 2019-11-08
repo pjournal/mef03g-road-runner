@@ -1,0 +1,93 @@
+---
+title: "BES-Assignment"
+author: "road-runner"
+date: "11/6/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+```{r set-options, echo=FALSE, cache=FALSE, warning=FALSE}
+options(width = 150)
+```
+
+
+## 1.Introduction and Preparation
+
+The Individual Pension System (“IPS” for short) is a private pension system that provides an income to maintain living standards during retirement through the long-term investment of the savings people make during their active careers. People participate in the system voluntarily to benefit from an income in addition to the pension income provided by the social security system.
+
+The dataset we used in this analysis from Pension Monitoring Center includes number of partitcipants, fund_amount, contract numbers and invested amounts of pension companies in Turkey.
+
+Column names and explanations are below:
+
+<ol type = "1">
+<li>pens_company: Pension Company</li>
+<li>participant_nbr: Number of participants</li>
+<li>participant_fund_amt: Voluntary participants' total fund amount</li>
+<li>state_cont_amt: State Contribution</li>
+<li>cont_amt: contribution amount</li>
+<li>pensioner_nbr: Number of pensioners</li>
+<li>pens_cont_nbr: Number of pension contracts</li>
+<li>grp_cont_nbr: Group Individual Contracts </li>
+<li>grp_noncont_nbr: Noncontributory Group Contract</li>
+<li>total_cont_nbr: Total Contracts</li>
+<li>pens_invstd_amt: Total Invested Amount of pension contracts</li>
+<li>grp_cont_invstd_amt: Total Invested Amount of Group Individual Contracts Noncontributory Group Contract</li>
+<li>grp_noncont_invstd_amt: Total Invested Amount of Noncontributory Group Contract</li>
+<li>total_invstd_amt: Total Invested Amount</li>
+<li>year</li>
+<li>month</li>
+</ol>
+
+
+```{r download, warning=FALSE}
+raw_data_full <- ''
+# Creating a list including all csv names to use in for loop
+list_all <- c('201907','201906')
+for (i in 1:length(list_all)) {
+    
+  file_url<- paste('https://github.com/pjournal/mef03g-road-runner/blob/master/BES-Data/', list_all[i],'.csv?raw=true', sep='')
+  
+  print(file_url)
+  
+  # Reading csv from the url
+  raw_data <- read.csv(file_url,sep=';',header=F)
+  
+  # Replacing NA values with 0 and label the time period with year and month, so when data is merged the data there won't be any confusion.
+  raw_data <- 
+    raw_data %>%
+    mutate_if(is.numeric,funs(ifelse(is.na(.),0,.))) %>% 
+    mutate(yearmonth=list_all[i])
+  
+  # Appending raw_data_full into raw_data_full for each iteration
+  raw_data_full<-rbind(raw_data_full,raw_data)
+  
+}
+# Adding column names to raw_data_full
+colnames(raw_data_full) <- c('pens_company','participant_nbr','participant_fund_amt','state_cont_amt','cont_amt','pensioner_nbr','pens_cont_nbr','grp_cont_nbr','grp_noncont_nbr','total_cont_nbr','pens_invstd_amt','grp_cont_invstd_amt','grp_noncont_invstd_amt','total_invstd_amt','yearmonth')
+raw_data_full <- raw_data_full %>% slice(-c(1))
+
+```
+
+
+
+
+
+## 2.Analysis
+
+
+### 2.1.Contract Type -  "Distribution of Contract Types per Company for 2018"
+
+
+
+### 2.2. Payment percentage per participant     "Percentage of contribution amount and number of participants." (Katkı payının katılımcı sayısına oranına göre karşılaştırma  )
+
+### 2.3. Participant Number  "Participant Numbers by Company for 2017-2018 "
+
+
+## 3.Results
+
+
