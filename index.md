@@ -7,9 +7,12 @@
     -Gökhan Koca
     -Tuğçe Aydın
     
-## ODD ASSIGNMENT
+## ODD ASSIGNMENT - 5/11/2019
 
 [Retail Car Sales Analysis](road-runner_ODD-Assignment.html)
+
+## BES ASSIGMENT - 8/11/2019
+[BES](road-runner_BES-Assignment.html)
 
 ## FINAL PROJECT 
 
