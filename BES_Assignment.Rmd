@@ -81,7 +81,7 @@ raw_data_full <- raw_data_full %>% slice(-c(1))
 
 ### 2.1.Top 5 -5 Companies with the Most Customers
 
-```{r category}
+```{r customer}
 df_category <-
 raw_data_full %>%
   group_by(pens_company)%>%
@@ -110,7 +110,7 @@ ggplot(HisPer, aes(x=Category, y=freq, fill=Category))+
 
 ### 2.2. Payment percentage per participant
 
-```{r locality}
+```{r rate}
 df_rate <-
 raw_data_full %>%
   group_by(pens_company)%>%
@@ -121,10 +121,10 @@ raw_data_full %>%
   mutate(sr = row_number()) %>%
   filter(sr < 6)
 
-df_rate
+df_rate2 <- df_rate %>% mutate_if(is.numeric, round, 0)
 
 #Creating a column Category to transpose the values
-HisRate  <- data.frame(Category = df_rate$pens_company, freq=df_rate$rwn)
+HisRate  <- data.frame(Category = df_rate2$pens_company, freq=df_rate2$rwn)
 
 ggplot(HisRate, aes(x=Category, y=freq, fill=Category))+
   geom_bar(stat="identity")+
@@ -137,7 +137,20 @@ ggplot(HisRate, aes(x=Category, y=freq, fill=Category))+
 ```
 
 
-### 2.3. Participant Number  "Participant Numbers by Company for 2017-2018 "
+
+### 2.3. Pensioner Number of Top 5 Company
+
+```{r retired}
+df_retired <- 
+raw_data_full %>% select(yearmonth,pens_company,pensioner_nbr) %>% 
+  filter(substr(yearmonth,1,4) == 2018) %>%
+    filter(pens_company %in% c("Allianz Hayat ve Emeklilik","Allianz Ya?am ve Emeklilik","Avivasa Emeklilik ve Hayat","Fiba Emeklilik ve Hayat","Groupama Emeklilik"))
 
 
-## 3.Results
+ggplot(df_retired,aes(x = df_retired$yearmonth, y = df_retired$pensioner_nbr, group=pens_company, colour=pens_company)) + 
+  geom_line() + 
+  geom_point()+
+  labs( x="Monthly Pension Number" , y = "Month Year")+ 
+  theme(legend.position = "bottom", axis.text.x = element_text(angle = 60, vjust = 0.5, hjust = 0, size = 10))
+
+```
