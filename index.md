@@ -34,10 +34,11 @@ Variables will be as following:
 - Analyzing data according to different time periods 
 
 ### Analysis Objectives
-- Finding the provinces where the most number of sale is made, the average of sales over time periods.
-- Analyzing the sale prices in provinces and group them by giving intervals.
+- Finding the provinces where the most number of sales is made, the average of sales over time periods.
+- Analyzing the number of sales in provinces and group them by first sale and second hand sale.
+- Analyzing the number of sales in provinces and group them by Mortgaged house sales and other sales.
 - Analyzing the province preference by nationality. 
-- Analyzing mortgage credits detail of sales.
+- Analyzing Mortgaged house sales in detail of first sale and second hand sales by provinces and years
    
 #
 The data set that we will use for the project: 
@@ -50,6 +51,7 @@ The data set that we will use for the project:
             -Mortgaged house sales in detail of first sale and second hand sale by provinces and years, 2013-2019
             -House sales in detail of first sale and second hand sale by provinces and years, 2013-2019
             -House sales in detail of genders by provinces, 2014 - 2018 
+            -House sales in detail of mortgaged and other houses by provinces and years, 2013-2019 
   
   [Data Link - TUIK ](http://www.tuik.gov.tr/PreTablo.do?alt_id=1056 ) 
 
