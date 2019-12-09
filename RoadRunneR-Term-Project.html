@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html class=""><head>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <script type="application/shiny-singletons"></script>
+  <script type="application/html-dependencies">json2[2014.02.04];jquery[1.12.4];shiny[1.3.2]</script>
+<script src="RoadRunneR%20Term%20Project_dosyalar/json2-min.js"></script>
+<script src="RoadRunneR%20Term%20Project_dosyalar/jquery.js"></script>
+<link href="RoadRunneR%20Term%20Project_dosyalar/shiny.css" rel="stylesheet">
+<script src="RoadRunneR%20Term%20Project_dosyalar/shiny.js"></script>  <script src="RoadRunneR%20Term%20Project_dosyalar/rmd_loader.js"></script>
+  <link href="RoadRunneR%20Term%20Project_dosyalar/rmd_loader.css" rel="stylesheet">
+
+<meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" type="text/css" href="RoadRunneR%20Term%20Project_dosyalar/bootstrap.css"><script src="RoadRunneR%20Term%20Project_dosyalar/bootstrap.js"></script><script src="RoadRunneR%20Term%20Project_dosyalar/html5shiv.js"></script><script src="RoadRunneR%20Term%20Project_dosyalar/respond.js"></script><script src="RoadRunneR%20Term%20Project_dosyalar/tabsets.js"></script><link rel="stylesheet" type="text/css" href="RoadRunneR%20Term%20Project_dosyalar/default.css"><script src="RoadRunneR%20Term%20Project_dosyalar/highlight.js"></script><link rel="stylesheet" type="text/css" href="RoadRunneR%20Term%20Project_dosyalar/rmd_perf.css"><script src="RoadRunneR%20Term%20Project_dosyalar/rmd_perf.js"></script><meta name="rstudio_origin" content="127.0.0.1:20408"><script src="RoadRunneR%20Term%20Project_dosyalar/rsiframe.js"></script>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="pandoc">
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE">
+
+
+
+
+<title>RoadRunneR Term Project</title>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type="text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+<script type="text/javascript" src="RoadRunneR%20Term%20Project_dosyalar/MathJax.js"></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1px; bottom: 2px; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head>
+
+<body><div id="MathJax_Message" style="display: none;"></div>
+  <div>
+    <div data-display-if="!output.__reactivedoc__" data-ns-prefix="" style="display: none;">
+      <div id="rmd_loader_wrapper">
+        <div id="rmd_loader" style="">
+          <p>Please wait...</p>
+          <img src="RoadRunneR%20Term%20Project_dosyalar/rmd_loader.gif">
+        </div>
+      </div>
+    </div>
+    <div id="__reactivedoc__" class="shiny-html-output shiny-bound-output">
+
+
+
+
+
+
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="fluid-row" id="section-header">
+
+
+
+<h1 class="title toc-ignore">RoadRunneR Term Project</h1>
+
+</div>
+
+
+<h2>
+1-Key Takeaways
+</h2>
+<ul style="list-style-type:square;">
+<li>
+We have contacted with TUIK-Turkish Statistical Institute- for obtaining
+ a better formatted data set than the ones on their internet site
+</li>
+<li>
+What our aim is to inspect the housing sales data for at least the last 3
+ years with price, mortgage credits information, demographical 
+information about the buyer and the province information as the city
+</li>
+Variables will be as following:
+<li>
+We analyzed the numbers of house sales to foreigners and distributions to the major cities in Turkey
+</li>
+<li>
+We also analyzed the numbers of house sales by gender and inspect which cities have more female owner by ratio than others.
+</li>
+<h2>
+2-Data Extraction and Cleaning
+</h2>
+<p>Required libraries for analysis are loaded below</p>
+<pre class="r"><code class="hljs">knitr::opts_chunk$set(echo = <span class="hljs-literal">TRUE</span>)
+<span class="hljs-keyword">library</span>(tidyverse)
+<span class="hljs-keyword">library</span>(sp)
+<span class="hljs-keyword">library</span>(ggplot2)
+<span class="hljs-keyword">library</span>(readr)
+<span class="hljs-keyword">library</span>(tibble)
+<span class="hljs-keyword">library</span>(tidyr)
+<span class="hljs-keyword">library</span>(purrr)
+<span class="hljs-keyword">library</span>(rvest)
+<span class="hljs-keyword">library</span>(xml2)
+<span class="hljs-keyword">library</span>(reshape2)
+<span class="hljs-keyword">library</span>(mapproj)
+<span class="hljs-keyword">library</span>(wordcloud)
+<span class="hljs-keyword">library</span>(tm)
+<span class="hljs-keyword">library</span>(ggthemes)
+<span class="hljs-keyword">library</span>(scales) <span class="hljs-comment"># Needed for formatting y-axis labels to non-scientific type</span>
+<span class="hljs-keyword">library</span>(sqldf)</code></pre>
+<p>Data tables published to GitHub, url assigned, and files read below</p>
+<pre class="r"><code class="hljs">file_url&lt;- paste(<span class="hljs-string">'https://github.com/pjournal/mef03g-road-runner/blob/master/TUIK-DATA/House_Sales_Foreigners.csv?raw=true'</span>, sep=<span class="hljs-string">''</span>)
+
+file_url_gender&lt;- paste(<span class="hljs-string">'https://github.com/pjournal/mef03g-road-runner/blob/master/TUIK-DATA/House_Sales_Gender.csv?raw=true'</span>, sep=<span class="hljs-string">''</span>)
+
+file_url_province&lt;- paste(<span class="hljs-string">'https://raw.githubusercontent.com/pjournal/mef03g-road-runner/master/TUIK-DATA/House_Sales_Provinced_Based.csv?raw=true'</span>, sep=<span class="hljs-string">''</span>)
+
+
+<span class="hljs-comment"># Reading foreigners data from the url</span>
+raw_data &lt;- read.csv(file_url,sep=<span class="hljs-string">','</span>,header=<span class="hljs-literal">T</span>)
+
+Tuik_Foreigners &lt;- raw_data %&gt;% mutate_if(is.numeric,funs(ifelse(is.na(.),<span class="hljs-number">0</span>,.))) 
+
+Tuik_Foreigners  &lt;- Tuik_Foreigners %&gt;% mutate(Sales_Numbers=(January+February  +March + April + May + June + July + August + September + October+ November +December))
+
+
+<span class="hljs-comment"># Reading gender data from the url</span>
+raw_data_gender &lt;- read.csv(file_url_gender,sep=<span class="hljs-string">','</span>,header=<span class="hljs-literal">T</span>)
+
+<span class="hljs-comment"># Reading province data from the url</span>
+raw_data_province &lt;- read.csv(file_url_province,sep=<span class="hljs-string">';'</span>,header=<span class="hljs-literal">F</span>)
+
+<span class="hljs-comment"># Slicing first line and readjusting the column names for province data</span>
+colnames(raw_data_province) &lt;- c(<span class="hljs-string">'Year'</span>,<span class="hljs-string">'Month'</span>,<span class="hljs-string">'Province'</span>,<span class="hljs-string">'Mortgaged_FirstHand_Sale'</span>,<span class="hljs-string">'Mortgaged_SecondHand_Sale'</span>,<span class="hljs-string">'Other_FirstHand_Sale'</span>,<span class="hljs-string">'Other_SecondHand_Sale'</span>)
+
+raw_data_province &lt;- raw_data_province %&gt;% slice(-c(<span class="hljs-number">1</span>))</code></pre>
+<h2>
+3-Data Analysis
+</h2>
+<div id="section-house-sales-numbers-with-mortgaged" class="section level2">
+<h2>House Sales Numbers with Mortgaged</h2>
+<p>Mortgaged sales are demonstrating the same house as collateral to 
+loan guarantee for houses purchased by borrowing. This data includes 
+house sales numbers with mortgage in Turkey from 2013 to 2019 September.</p>
+<p>Columns names and explanations are below:</p>
+<ol type="1">
+<li>
+Year
+</li>
+<li>
+Month
+</li>
+<li>
+Province
+</li>
+<li>
+Mortgaged_FirstHand_Sale: The first time sale of a house by the company 
+or person which took ownership by apartments / sharing access by 
+apartments.
+</li>
+<li>
+Mortgaged_SecondHand_Sale: Means that a house sold by an owner that has bought the house by first sale, to another person.
+</li>
+<li>
+Other_FirstHand_Sale :All first hand house sales except mortgaged sales
+</li>
+<li>
+Other_SecondHand_Sale: All second hand house sales except mortgaged sales
+</li>
+<div id="section-total-sales-numbers-through-years-by-sales-type" class="section level3">
+<h3>Total Sales Numbers through Years by Sales Type</h3>
+<pre class="r"><code class="hljs">df_hs_yearly &lt;-
+  sqldf (<span class="hljs-string">'select Year
+    ,sum(Mortgaged_FirstHand_Sale) as MortgageFirstHand
+    ,sum(Mortgaged_SecondHand_Sale) as MortgageSecondHand
+    ,sum(Other_FirstHand_Sale) as OtherFirstHand
+    ,sum(Other_SecondHand_Sale) as OtherSecondHand
+  from raw_data_province
+  group by Year'</span>)
+
+df_hs_yearly_pivot &lt;- 
+  melt(df_hs_yearly, id.vars = c(<span class="hljs-string">"Year"</span>),measure.vars = c(<span class="hljs-string">"MortgageFirstHand"</span>, <span class="hljs-string">"MortgageSecondHand"</span>,<span class="hljs-string">"OtherFirstHand"</span>,<span class="hljs-string">"OtherSecondHand"</span> ))</code></pre>
+<pre class="r"><code class="hljs">ggplot(data = df_hs_yearly_pivot, aes(x = Year , y = value/<span class="hljs-number">1000</span> , group = variable)) +
+  geom_bar(aes(fill = Year),stat = <span class="hljs-string">"identity"</span>) + scale_fill_hue() + theme(axis.text.x = element_text(angle = <span class="hljs-number">30</span>, hjust = <span class="hljs-number">1</span>))+
+  <span class="hljs-comment">#geom_bar(aes(fill = factor(..x.. , labels =Year)), stat = "identity") + </span>
+  labs(fill = <span class="hljs-string">"Year Colors"</span>) + 
+  facet_grid(~ variable) +
+  scale_y_continuous(<span class="hljs-string">"Sales(k)"</span>) +
+  theme(axis.text.x = element_text(angle = <span class="hljs-number">90</span>, hjust = <span class="hljs-number">1</span>)) </code></pre>
+<p><img src="RoadRunneR%20Term%20Project_dosyalar/plt_mortgaged1-1.png" width="672"></p>
+</div>
+<div id="section-total-sales-numbers-through-years-comparising-five-big-cities-with-population-and-the-others" class="section level3">
+<h3>Total Sales Numbers through Years Comparising Five Big Cities with Population and the Others</h3>
+<pre class="r"><code class="hljs">df_hs_yearly_big_5_vs_others &lt;- 
+  sqldf (<span class="hljs-string">'select
+  case when Province in ("Istanbul-34","Izmir-35","Ankara-6","Bursa-16","Antalya-7") then "Big_five"
+    else "Others"
+  end Big_Five_Flag, Year
+  ,sum(Mortgaged_FirstHand_Sale) as MortgageFirstHand
+  ,sum(Mortgaged_SecondHand_Sale) as MortgageSecondHand
+  ,sum(Other_FirstHand_Sale) as OtherFirstHand
+  ,sum(Other_SecondHand_Sale) as OtherSecondHand
+from raw_data_province
+group by case when Province in ("Istanbul-34","Izmir-35","Ankara-6","Bursa-16","Antalya-7")
+  then "Big_five"
+  else "Others"
+  end, Year'</span>)
+
+df_hs_yearly_big_5_pivot &lt;- melt(df_hs_yearly_big_5_vs_others, id.vars = c(<span class="hljs-string">"Year"</span>,<span class="hljs-string">"Big_Five_Flag"</span>),
+                           measure.vars = c(<span class="hljs-string">"MortgageFirstHand"</span>, <span class="hljs-string">"MortgageSecondHand"</span>,<span class="hljs-string">"OtherFirstHand"</span>,<span class="hljs-string">"OtherSecondHand"</span> ))</code></pre>
+<pre class="r"><code class="hljs">ggplot(data = df_hs_yearly_big_5_pivot, aes(x = Year , y = value/<span class="hljs-number">1000</span> , group = Big_Five_Flag)) +
+  <span class="hljs-comment">#ggtitle("Plot of length \n by dose") + xlab("Dose (mg)") + ylab("Teeth length")</span>
+  geom_bar(aes(fill = factor(..x.., labels = <span class="hljs-string">"Year"</span>)), stat = <span class="hljs-string">"identity"</span>) +
+  labs(fill = <span class="hljs-string">"Year"</span>) +
+  facet_grid(~ Big_Five_Flag) +
+  scale_y_continuous(<span class="hljs-string">"Sales(k)"</span>) +
+  theme(axis.text.x = element_text(angle = <span class="hljs-number">90</span>, hjust = <span class="hljs-number">1</span>)) </code></pre>
+<p><img src="RoadRunneR%20Term%20Project_dosyalar/plt_mortgaged2-1.png" width="672"></p>
+</div>
+</ol></div>
+<div id="section-house-sales-numbers-to-foreigners" class="section level2">
+<h2>House Sales Numbers to Foreigners</h2>
+<p>House Sales to Foreigners covers the sales to the people that are 
+defined as foreigner, non-Turkish originated and not subjected to law 
+number 4112 in the database of General Directorate of Land Registry and 
+Cadastre,“Turkey’s National Geographic Information System” (TUCBS), 
+people that.</p>
+<p>House sales numbers to foreigners data covered the first 10 city have been published since 2014.</p>
+<p>Column names are below:</p>
+<ol type="1">
+<li>
+Year
+</li>
+<li>
+Province
+</li>
+<li>
+January
+</li>
+<li>
+February
+</li>
+<li>
+March
+</li>
+<li>
+April
+</li>
+<li>
+May
+</li>
+<li>
+June
+</li>
+<li>
+July
+</li>
+<li>
+August
+</li>
+<li>
+September
+</li>
+<li>
+October
+</li>
+<li>
+November
+</li>
+<li>
+December
+</li>
+<div id="section-provinces-covered-by-the-data" class="section level3">
+<h3>Provinces Covered by the Data</h3>
+<pre class="r"><code class="hljs">city=c(<span class="hljs-string">"Istanbul"</span>,<span class="hljs-string">"Antalya"</span>,<span class="hljs-string">"Ankara"</span>,<span class="hljs-string">"Bursa"</span>,<span class="hljs-string">"Yalova"</span>,<span class="hljs-string">"Sakarya"</span>,<span class="hljs-string">"Trabzon"</span>,<span class="hljs-string">"Mugla"</span>,<span class="hljs-string">"Mersin"</span>,<span class="hljs-string">"Aydin"</span>,
+<span class="hljs-string">"Samsun"</span>,<span class="hljs-string">"Izmir"</span>)
+ 
+sett=sample(seq(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0.01</span>) , length(city) , replace=<span class="hljs-literal">TRUE</span>) 
+ 
+par(bg=<span class="hljs-string">"lightblue"</span>) 
+wordcloud(city , sett , col=terrain.colors(length(city) , alpha=<span class="hljs-number">0.8</span>) , rot.per=<span class="hljs-number">0.4</span> )</code></pre>
+<p><img src="RoadRunneR%20Term%20Project_dosyalar/provinces-1.png" width="672"></p>
+</div>
+<div id="section-provinces-with-the-highest-sales-by-seasons" class="section level3">
+<h3>Provinces with the Highest Sales by Seasons</h3>
+<pre class="r"><code class="hljs">Tuik_Foreigners_sum&lt;- Tuik_Foreigners %&gt;% group_by(Province) %&gt;% summarise(total_sum=sum(June+July+August),total_win=sum(December+January+February),total_sp=sum(March+April+May),total_aut=sum(September + October+ November )) %&gt;% arrange(desc(total_sum))%&gt;% mutate(
+   rank =row_number(),vars_group = <span class="hljs-string">'Province'</span>
+  ) %&gt;% filter( Province!=<span class="hljs-string">"Other provinces"</span>)
+
+
+par(mfrow=c(<span class="hljs-number">2</span>,<span class="hljs-number">2</span>))
+
+
+barplot(Tuik_Foreigners_sum$total_sp, las = <span class="hljs-number">2</span>, names.arg = Tuik_Foreigners_sum$Province,
+        col =<span class="hljs-string">"pink"</span>, main =<span class="hljs-string">"Spring"</span>,
+        ylab = <span class="hljs-string">"House Sales"</span>)
+
+barplot(Tuik_Foreigners_sum$total_sum, las = <span class="hljs-number">2</span>, names.arg = Tuik_Foreigners_sum$Province,
+        col =<span class="hljs-string">"yellow"</span>, main =<span class="hljs-string">"Summer"</span>,
+        ylab = <span class="hljs-string">"House Sales"</span>)
+
+
+barplot(Tuik_Foreigners_sum$total_sp, las = <span class="hljs-number">2</span>, names.arg = Tuik_Foreigners_sum$Province,
+        col =<span class="hljs-string">"orange"</span>, main =<span class="hljs-string">"Autumn"</span>,
+        ylab = <span class="hljs-string">"House Sales"</span>)
+
+
+barplot(Tuik_Foreigners_sum$total_win, las = <span class="hljs-number">2</span>, names.arg = Tuik_Foreigners_sum$Province,
+        col =<span class="hljs-string">"lightblue"</span>, main =<span class="hljs-string">"Winter"</span>,
+        ylab = <span class="hljs-string">"House Sales"</span>)</code></pre>
+<p><img src="RoadRunneR%20Term%20Project_dosyalar/season-1.png" width="672"></p>
+<p>This plot states that seasons doesn’t have significant impact on house sales.</p>
+</div>
+<div id="section-house-sales-by-year" class="section level3">
+<h3>House Sales by Year</h3>
+<pre class="r"><code class="hljs">Tuik_Foreigners_by_year&lt;- Tuik_Foreigners%&gt;%filter( Province!=<span class="hljs-string">"Other provinces"</span>) %&gt;% group_by(Year) %&gt;% summarise(total=sum(June+July+August+December+January+February+March+April+May+September + October+ November)) %&gt;% arrange(Year) 
+
+
+p1 &lt;- ggplot() +
+  geom_line(aes(y = total, x = Year), size=<span class="hljs-number">1.5</span>, data = Tuik_Foreigners_by_year,
+            stat=<span class="hljs-string">"identity"</span>) +
+  theme(legend.position=<span class="hljs-string">"bottom"</span>, legend.direction=<span class="hljs-string">"horizontal"</span>,
+        legend.title = element_blank()) +
+  scale_x_continuous(breaks=seq(<span class="hljs-number">2013</span>,<span class="hljs-number">2019</span>,<span class="hljs-number">1</span>)) +
+  labs(x=<span class="hljs-string">"Year"</span>, y=<span class="hljs-string">"House Sales"</span>) +
+  ggtitle(<span class="hljs-string">"Total of House Sales by Year"</span>) +
+  theme(axis.line = element_line(size=<span class="hljs-number">1</span>, colour = <span class="hljs-string">"black"</span>), panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), panel.border = element_blank(),
+        panel.background = element_blank()) +
+  theme(plot.title=element_text(family=<span class="hljs-string">"xkcd-Regular"</span>), text=element_text(family=<span class="hljs-string">"xkcd-Regular"</span>),
+        axis.text.x=element_text(colour=<span class="hljs-string">"black"</span>, size = <span class="hljs-number">10</span>))
+p1</code></pre>
+<p><img src="RoadRunneR%20Term%20Project_dosyalar/years%2520-1.png" width="672"></p>
+<p>House sales to foreigners between 2017 and 2018 is remarkable 
+increased. Since 2019 November and December sales could not be reflected
+ into this analysis, the change between 2018 and 2019 could not be 
+determined.</p>
+</div>
+<div id="section-turkey-sales-concentration-map" class="section level3">
+<h3>Turkey Sales Concentration Map</h3>
+<pre class="r"><code class="hljs"><span class="hljs-comment"># Extract Turkey map data</span>
+TURKEY &lt;- readRDS(url(<span class="hljs-string">"https://github.com/pjournal/mef03g-road-runner/blob/master/TUIK-DATA/gadm36_TUR_1_sp.rds?raw=true"</span>))
+ 
+TURKEY@data %&gt;% as_tibble() %&gt;% head(<span class="hljs-number">10</span>)</code></pre>
+<pre><code class="hljs">## # A tibble: 10 x 10
+##    GID_0 NAME_0 GID_1 NAME_1 VARNAME_1 NL_NAME_1 TYPE_1 ENGTYPE_1 CC_1 
+##    &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;
+##  1 TUR   Turkey TUR.~ Adana  Seyhan    &lt;NA&gt;      Il     Province  &lt;NA&gt; 
+##  2 TUR   Turkey TUR.~ Adiya~ Adiyaman  &lt;NA&gt;      Il     Province  &lt;NA&gt; 
+##  3 TUR   Turkey TUR.~ Afyon  Afyonkar~ &lt;NA&gt;      Il     Province  &lt;NA&gt; 
+##  4 TUR   Turkey TUR.~ Agri   Agri|Kar~ &lt;NA&gt;      Il     Province  &lt;NA&gt; 
+##  5 TUR   Turkey TUR.~ Aksar~ &lt;NA&gt;      &lt;NA&gt;      Il     Province  &lt;NA&gt; 
+##  6 TUR   Turkey TUR.~ Amasya &lt;NA&gt;      &lt;NA&gt;      Il     Province  &lt;NA&gt; 
+##  7 TUR   Turkey TUR.~ Ankara Ancara|A~ &lt;NA&gt;      Il     Province  &lt;NA&gt; 
+##  8 TUR   Turkey TUR.~ Antal~ Adalia|A~ &lt;NA&gt;      Il     Province  &lt;NA&gt; 
+##  9 TUR   Turkey TUR.~ Ardah~ &lt;NA&gt;      &lt;NA&gt;      Il     Province  &lt;NA&gt; 
+## 10 TUR   Turkey TUR.~ Artvin Çoruh     &lt;NA&gt;      Il     Province  &lt;NA&gt; 
+## # ... with 1 more variable: HASC_1 &lt;chr&gt;</code></pre>
+<pre class="r"><code class="hljs">TUR_for &lt;- fortify(TURKEY)</code></pre>
+<pre><code class="hljs">## Regions defined for each Polygons</code></pre>
+<pre class="r"><code class="hljs">foreign_full&lt;- Tuik_Foreigners  %&gt;% select(Year,Province,Sales_Numbers)
+
+Tuik_Foreigners_by_province&lt;- Tuik_Foreigners%&gt;%filter( Province!=<span class="hljs-string">"Other provinces"</span>) %&gt;% group_by(Province) %&gt;% summarise(total=sum(June+July+August+December+January+February+March+April+May+September + October+ November)) %&gt;% arrange(desc(total)) 
+
+id_and_cities_full &lt;- data_frame(id = rownames(TURKEY@data),
+                            Province = TURKEY@data$NAME_1) %&gt;% 
+  left_join(Tuik_Foreigners_by_province, by = <span class="hljs-string">"Province"</span>)
+
+final_map &lt;- left_join(TUR_for, id_and_cities_full, by = <span class="hljs-string">"id"</span>)
+
+head(final_map,<span class="hljs-number">10</span>)</code></pre>
+<pre><code class="hljs">##        long      lat order  hole piece id group Province total
+## 1  35.41454 36.58850     1 FALSE     1  1   1.1    Adana    NA
+## 2  35.41459 36.58820     2 FALSE     1  1   1.1    Adana    NA
+## 3  35.41434 36.58820     3 FALSE     1  1   1.1    Adana    NA
+## 4  35.41347 36.58820     4 FALSE     1  1   1.1    Adana    NA
+## 5  35.41347 36.58792     5 FALSE     1  1   1.1    Adana    NA
+## 6  35.41236 36.58792     6 FALSE     1  1   1.1    Adana    NA
+## 7  35.41236 36.58764     7 FALSE     1  1   1.1    Adana    NA
+## 8  35.41208 36.58764     8 FALSE     1  1   1.1    Adana    NA
+## 9  35.41208 36.58736     9 FALSE     1  1   1.1    Adana    NA
+## 10 35.41180 36.58736    10 FALSE     1  1   1.1    Adana    NA</code></pre>
+<pre class="r"><code class="hljs">ggplot(final_map) +
+  geom_polygon( aes(x = long, y = lat, group = group, fill = total),
+                color = <span class="hljs-string">"grey"</span>) +
+  coord_map() +
+  theme_void() + 
+  labs(title = <span class="hljs-string">"House Sales Numbers to Foreigners"</span>,
+       subtitle = paste0(<span class="hljs-string">"Total Sales Numbers of Houses: "</span>,sum(Tuik_Foreigners_by_province$total)),
+       caption = <span class="hljs-string">"Source: Türkiye İstatistik Kurumu"</span>) +
+  scale_fill_distiller(name = <span class="hljs-string">"House Sales Numbers"</span>,
+                       palette = <span class="hljs-string">"Spectral"</span>, limits = c(<span class="hljs-number">0</span>,<span class="hljs-number">61000</span>), na.value = <span class="hljs-string">"black"</span>) +
+  theme(plot.title = element_text(hjust = <span class="hljs-number">0.5</span>),
+        plot.subtitle = element_text(hjust = <span class="hljs-number">0.5</span>))</code></pre>
+<p><img src="RoadRunneR%20Term%20Project_dosyalar/finalmap%2520-1.png" width="672"></p>
+<p>Istanbul has the highest sales density while Antalya follows. Although Samsun and Izmir have the lowest sales density</p>
+</div>
+<div id="section-total-sales-numbers-to-foreigners-with-cities" class="section level3">
+<h3>Total Sales Numbers to Foreigners with cities</h3>
+<iframe class="shiny-frame" src="RoadRunneR%20Term%20Project_dosyalar/a.html" width="100%" height="400"></iframe>
+</div>
+</ol></div>
+<div id="section-house-sales-numbers-in-detail-of-genders-in-turkey" class="section level2">
+<h2>House Sales Numbers in Detail of Genders in Turkey</h2>
+<p>House sales bumbers in detail of genders in Turkey covers the house 
+sales in Turkey by men,women,common which indicates that a house is 
+bought jointly by one or more than one woman and man and other refers to
+ the house sales (corporate and foreign) other than those done by women 
+and men individually or jointly.</p>
+<p>Column names are below:</p>
+<ol type="1">
+<li>
+Year
+</li>
+<li>
+City
+</li>
+<li>
+Male
+</li>
+<li>
+Female
+</li>
+<li>
+Common
+</li>
+<li>
+Other
+</li>
+<li>
+Total
+</li>
+<div id="section-house-sales-to-men-and-women-from-2014-to-2018" class="section level3">
+<h3>House Sales to men and women from 2014 to 2018</h3>
+<pre class="r"><code class="hljs"><span class="hljs-comment"># Calculating house sales to males and females through years</span>
+yearly &lt;-
+raw_data_gender %&gt;% 
+  filter(City == <span class="hljs-string">'Turkiye'</span>) %&gt;%
+  group_by(Year) %&gt;%
+  summarise(Women = sum(Female), Men = sum(Male)) %&gt;%
+  gather(Gender,Sales,-Year)
+
+yearly</code></pre>
+<pre><code class="hljs">## # A tibble: 10 x 3
+##     Year Gender  Sales
+##    &lt;int&gt; &lt;chr&gt;   &lt;int&gt;
+##  1  2014 Women  343209
+##  2  2015 Women  382237
+##  3  2016 Women  391334
+##  4  2017 Women  409453
+##  5  2018 Women  421286
+##  6  2014 Men    695727
+##  7  2015 Men    774874
+##  8  2016 Men    801048
+##  9  2017 Men    837928
+## 10  2018 Men    790006</code></pre>
+<pre class="r"><code class="hljs">ggplot(yearly, aes(Year, Sales, group = Gender, color = Gender)) + geom_line() + geom_point() +
+  scale_y_continuous(labels = comma)</code></pre>
+<p><img src="RoadRunneR%20Term%20Project_dosyalar/plt_yearly-1.png" width="672"></p>
+<p>An interesting point here is, house sales to males from 2017 through 
+2018 is decreasing, altough sales to female in same period is 
+increasing.</p>
+</div>
+<div id="section-cities-has-highest-woman-house-owners-ratio" class="section level3">
+<h3>Cities has Highest Woman House Owners Ratio</h3>
+<pre class="r"><code class="hljs">top5_female &lt;-
+  raw_data_gender %&gt;%
+  group_by(City) %&gt;%
+  filter(City != <span class="hljs-string">"Türkiye"</span>) %&gt;%
+  summarise(Men = sum(Male), Women = sum(Female), Total = sum(Total)) %&gt;%
+  mutate(ratio = (Women / Total) * <span class="hljs-number">100</span>) %&gt;%
+  arrange(desc(ratio)) %&gt;%
+  mutate(rwn = row_number()) %&gt;%
+  filter(rwn &lt; <span class="hljs-number">6</span>)
+
+top5_female</code></pre>
+<pre><code class="hljs">## # A tibble: 5 x 6
+##   City         Men  Women  Total ratio   rwn
+##   &lt;fct&gt;      &lt;int&gt;  &lt;int&gt;  &lt;int&gt; &lt;dbl&gt; &lt;int&gt;
+## 1 Balikesir  71843  52056 134427  38.7     1
+## 2 Canakkale  33560  22861  62412  36.6     2
+## 3 Mugla      43275  31173  87814  35.5     3
+## 4 Edirne     19814  12617  35664  35.4     4
+## 5 Izmir     211136 138118 390747  35.3     5</code></pre>
+<pre class="r"><code class="hljs">ggplot(top5_female, aes(x=City, y=ratio, fill=City))+
+  geom_bar(stat=<span class="hljs-string">"identity"</span>)+
+  geom_text(aes(label = paste(<span class="hljs-string">"%"</span>,round(ratio,<span class="hljs-number">3</span>))), hjust=<span class="hljs-number">1.1</span>, size=<span class="hljs-number">3.2</span>)+
+  coord_flip() +
+  theme_minimal()+
+  labs(x=<span class="hljs-string">"City"</span>,y=<span class="hljs-string">"Percentage"</span>,title=<span class="hljs-string">"5 Cities has Highest Woman House Owners Ratio"</span>,fill=<span class="hljs-string">"City"</span>)</code></pre>
+<p><img src="RoadRunneR%20Term%20Project_dosyalar/plt_female-1.png" width="672"></p>
+<p>Balıkesir take the lead for female owners ratio among other cities 
+while Canakkale follows. Ege, Marmara and Akdeniz are the regions has 
+highest female house owner ratio.</p>
+</div>
+</ol></div>
+
+
+
+
+</ul></div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("section-TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "mathjax-local/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+
+</div>
+  </div>
+
+
+
+</body></html>

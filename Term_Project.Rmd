@@ -1,0 +1,453 @@
+---
+title: "RoadRunneR Term Project"
+output: html_document
+runtime: shiny
+---
+
+<h2>1-Key Takeaways</h2>
+
+<ul style="list-style-type:square;">
+<li>We have contacted with TUIK-Turkish Statistical Institute- for obtaining a better formatted data set than the ones on their internet site</li>
+<li>What our aim is to inspect the housing sales data for at least the last 3 years with price, mortgage credits information, demographical information about the buyer and the province information as the city</li>
+Variables will be as following:
+<li>We analyzed the numbers of house sales to foreigners and distributions to the major cities in Turkey</li>
+<li>We also analyzed the numbers of house sales by gender and inspect which cities have more female owner by ratio than others.</li>
+
+
+
+<h2>2-Data Extraction and Cleaning</h2>
+
+Required libraries for analysis are loaded below
+
+```{r setup, echo = TRUE, results='hide', warning=FALSE, collapse=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(sp)
+library(ggplot2)
+library(readr)
+library(tibble)
+library(tidyr)
+library(purrr)
+library(rvest)
+library(xml2)
+library(reshape2)
+library(mapproj)
+library(wordcloud)
+library(tm)
+library(ggthemes)
+library(scales) # Needed for formatting y-axis labels to non-scientific type
+library(sqldf)
+```
+
+
+Data tables published to GitHub, url assigned, and files read below
+
+```{r initial ,warning=FALSE}
+file_url<- paste('https://github.com/pjournal/mef03g-road-runner/blob/master/TUIK-DATA/House_Sales_Foreigners.csv?raw=true', sep='')
+
+file_url_gender<- paste('https://github.com/pjournal/mef03g-road-runner/blob/master/TUIK-DATA/House_Sales_Gender.csv?raw=true', sep='')
+
+file_url_province<- paste('https://raw.githubusercontent.com/pjournal/mef03g-road-runner/master/TUIK-DATA/House_Sales_Provinced_Based.csv?raw=true', sep='')
+
+
+# Reading foreigners data from the url
+raw_data <- read.csv(file_url,sep=',',header=T)
+
+Tuik_Foreigners <- raw_data %>% mutate_if(is.numeric,funs(ifelse(is.na(.),0,.))) 
+
+Tuik_Foreigners  <- Tuik_Foreigners %>% mutate(Sales_Numbers=(January+February	+March + April + May + June	+ July + August	+ September + October+ November +December))
+
+
+# Reading gender data from the url
+raw_data_gender <- read.csv(file_url_gender,sep=',',header=T)
+
+# Reading province data from the url
+raw_data_province <- read.csv(file_url_province,sep=';',header=F)
+
+# Slicing first line and readjusting the column names for province data
+colnames(raw_data_province) <- c('Year','Month','Province','Mortgaged_FirstHand_Sale','Mortgaged_SecondHand_Sale','Other_FirstHand_Sale','Other_SecondHand_Sale')
+
+raw_data_province <- raw_data_province %>% slice(-c(1))
+```
+
+
+
+<h2>3-Data Analysis</h2>
+
+## House Sales Numbers with Mortgaged
+
+Mortgaged sales are demonstrating the same house as collateral to loan guarantee for houses purchased by borrowing.
+This data includes house sales numbers with mortgage in Turkey from 2013 to 2019 September.
+
+Columns names and explanations are below:
+
+<ol type = "1">
+<li>Year</li>
+<li>Month</li>
+<li>Province</li>
+<li>Mortgaged_FirstHand_Sale: The first time sale of a house by the company or person which took ownership by apartments / sharing access by apartments.</li>
+<li>Mortgaged_SecondHand_Sale: Means that a house sold by an owner that has bought the house by first sale, to another person.</li>
+<li>Other_FirstHand_Sale :All first hand house sales except mortgaged sales</li>
+<li>Other_SecondHand_Sale: All second hand house sales except mortgaged sales</li>
+
+
+
+### Total Sales Numbers through Years by Sales Type
+
+```{r mortgaged1,warning=FALSE}
+df_hs_yearly <-
+  sqldf ('select Year
+    ,sum(Mortgaged_FirstHand_Sale) as MortgageFirstHand
+    ,sum(Mortgaged_SecondHand_Sale) as MortgageSecondHand
+    ,sum(Other_FirstHand_Sale) as OtherFirstHand
+    ,sum(Other_SecondHand_Sale) as OtherSecondHand
+  from raw_data_province
+  group by Year')
+
+df_hs_yearly_pivot <- 
+  melt(df_hs_yearly, id.vars = c("Year"),measure.vars = c("MortgageFirstHand", "MortgageSecondHand","OtherFirstHand","OtherSecondHand" ))
+```
+
+```{r plt_mortgaged1,warning=FALSE}
+ggplot(data = df_hs_yearly_pivot, aes(x = Year , y = value/1000 , group = variable)) +
+  geom_bar(aes(fill = Year),stat = "identity") + scale_fill_hue() + theme(axis.text.x = element_text(angle = 30, hjust = 1))+
+  #geom_bar(aes(fill = factor(..x.. , labels =Year)), stat = "identity") + 
+  labs(fill = "Year Colors") + 
+  facet_grid(~ variable) +
+  scale_y_continuous("Sales(k)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
+```
+
+
+
+### Total Sales Numbers through Years Comparising Five Big Cities with Population and the Others
+
+```{r mortgaged2,warning=FALSE}
+df_hs_yearly_big_5_vs_others <- 
+  sqldf ('select
+  case when Province in ("Istanbul-34","Izmir-35","Ankara-6","Bursa-16","Antalya-7") then "Big_five"
+    else "Others"
+  end Big_Five_Flag, Year
+  ,sum(Mortgaged_FirstHand_Sale) as MortgageFirstHand
+  ,sum(Mortgaged_SecondHand_Sale) as MortgageSecondHand
+  ,sum(Other_FirstHand_Sale) as OtherFirstHand
+  ,sum(Other_SecondHand_Sale) as OtherSecondHand
+from raw_data_province
+group by case when Province in ("Istanbul-34","Izmir-35","Ankara-6","Bursa-16","Antalya-7")
+  then "Big_five"
+  else "Others"
+  end, Year')
+
+df_hs_yearly_big_5_pivot <- melt(df_hs_yearly_big_5_vs_others, id.vars = c("Year","Big_Five_Flag"),
+                           measure.vars = c("MortgageFirstHand", "MortgageSecondHand","OtherFirstHand","OtherSecondHand" ))
+```
+
+```{r plt_mortgaged2,warning=FALSE}
+ggplot(data = df_hs_yearly_big_5_pivot, aes(x = Year , y = value/1000 , group = Big_Five_Flag)) +
+  #ggtitle("Plot of length \n by dose") + xlab("Dose (mg)") + ylab("Teeth length")
+  geom_bar(aes(fill = factor(..x.., labels = "Year")), stat = "identity") +
+  labs(fill = "Year") +
+  facet_grid(~ Big_Five_Flag) +
+  scale_y_continuous("Sales(k)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
+```
+
+
+
+
+## House Sales Numbers to Foreigners
+
+House Sales to Foreigners covers the sales to the people that are defined as foreigner, non-Turkish originated and not subjected to law number 4112 in the database of General Directorate of Land Registry and Cadastre,“Turkey’s National Geographic Information System” (TUCBS), people that.
+
+House sales numbers to foreigners data covered the first 10 city have been published since 2014.
+
+Column names are below:
+
+<ol type = "1">
+<li>Year</li>
+<li>Province</li>
+<li>January</li>
+<li>February</li>
+<li>March</li>
+<li>April</li>
+<li>May</li>
+<li>June</li>
+<li>July</li>
+<li>August</li>
+<li>September</li>
+<li>October</li>
+<li>November</li>
+<li>December</li>
+
+
+
+### Provinces Covered by the Data
+
+```{r provinces,warning=FALSE}
+city=c("Istanbul","Antalya","Ankara","Bursa","Yalova","Sakarya","Trabzon","Mugla","Mersin","Aydin",
+"Samsun","Izmir")
+ 
+sett=sample(seq(0,1,0.01) , length(city) , replace=TRUE) 
+ 
+par(bg="lightblue") 
+wordcloud(city , sett , col=terrain.colors(length(city) , alpha=0.8) , rot.per=0.4 )
+
+```
+
+
+
+### Provinces with the Highest Sales by Seasons
+
+```{r season,warning=FALSE}
+Tuik_Foreigners_sum<- Tuik_Foreigners %>% group_by(Province) %>% summarise(total_sum=sum(June+July+August),total_win=sum(December+January+February),total_sp=sum(March+April+May),total_aut=sum(September + October+ November )) %>% arrange(desc(total_sum))%>% mutate(
+   rank =row_number(),vars_group = 'Province'
+  ) %>% filter( Province!="Other provinces")
+
+
+par(mfrow=c(2,2))
+
+
+barplot(Tuik_Foreigners_sum$total_sp, las = 2, names.arg = Tuik_Foreigners_sum$Province,
+        col ="pink", main ="Spring",
+        ylab = "House Sales")
+
+barplot(Tuik_Foreigners_sum$total_sum, las = 2, names.arg = Tuik_Foreigners_sum$Province,
+        col ="yellow", main ="Summer",
+        ylab = "House Sales")
+
+
+barplot(Tuik_Foreigners_sum$total_sp, las = 2, names.arg = Tuik_Foreigners_sum$Province,
+        col ="orange", main ="Autumn",
+        ylab = "House Sales")
+
+
+barplot(Tuik_Foreigners_sum$total_win, las = 2, names.arg = Tuik_Foreigners_sum$Province,
+        col ="lightblue", main ="Winter",
+        ylab = "House Sales")
+
+``` 
+
+This plot states that seasons doesn't have significant impact on house sales.
+
+
+
+### House Sales by Year
+
+```{r years ,warning=FALSE}
+Tuik_Foreigners_by_year<- Tuik_Foreigners%>%filter( Province!="Other provinces") %>% group_by(Year) %>% summarise(total=sum(June+July+August+December+January+February+March+April+May+September + October+ November)) %>% arrange(Year) 
+
+
+p1 <- ggplot() +
+  geom_line(aes(y = total, x = Year), size=1.5, data = Tuik_Foreigners_by_year,
+            stat="identity") +
+  theme(legend.position="bottom", legend.direction="horizontal",
+        legend.title = element_blank()) +
+  scale_x_continuous(breaks=seq(2013,2019,1)) +
+  labs(x="Year", y="House Sales") +
+  ggtitle("Total of House Sales by Year") +
+  theme(axis.line = element_line(size=1, colour = "black"), panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), panel.border = element_blank(),
+        panel.background = element_blank()) +
+  theme(plot.title=element_text(family="xkcd-Regular"), text=element_text(family="xkcd-Regular"),
+        axis.text.x=element_text(colour="black", size = 10))
+p1
+```
+
+House sales to foreigners between 2017 and 2018 is remarkable increased. Since 2019 November and December sales could not be reflected into this analysis, the change between 2018 and 2019 could not be determined.
+
+
+
+### Turkey Sales Concentration Map
+
+```{r concentration,warning=FALSE}
+# Extract Turkey map data
+TURKEY <- readRDS(url("https://github.com/pjournal/mef03g-road-runner/blob/master/TUIK-DATA/gadm36_TUR_1_sp.rds?raw=true"))
+ 
+TURKEY@data %>% as_tibble() %>% head(10)
+
+TUR_for <- fortify(TURKEY)
+```
+  
+```{r maps,warning=FALSE}
+foreign_full<- Tuik_Foreigners  %>% select(Year,Province,Sales_Numbers)
+
+Tuik_Foreigners_by_province<- Tuik_Foreigners%>%filter( Province!="Other provinces") %>% group_by(Province) %>% summarise(total=sum(June+July+August+December+January+February+March+April+May+September + October+ November)) %>% arrange(desc(total)) 
+
+id_and_cities_full <- data_frame(id = rownames(TURKEY@data),
+                            Province = TURKEY@data$NAME_1) %>% 
+  left_join(Tuik_Foreigners_by_province, by = "Province")
+
+final_map <- left_join(TUR_for, id_and_cities_full, by = "id")
+
+head(final_map,10)
+```
+
+```{r finalmap ,warning=FALSE}
+ggplot(final_map) +
+  geom_polygon( aes(x = long, y = lat, group = group, fill = total),
+                color = "grey") +
+  coord_map() +
+  theme_void() + 
+  labs(title = "House Sales Numbers to Foreigners",
+       subtitle = paste0("Total Sales Numbers of Houses: ",sum(Tuik_Foreigners_by_province$total)),
+       caption = "Source: Türkiye İstatistik Kurumu") +
+  scale_fill_distiller(name = "House Sales Numbers",
+                       palette = "Spectral", limits = c(0,61000), na.value = "black") +
+  theme(plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+
+```
+
+Istanbul has the highest sales density while Antalya follows. Although Samsun and Izmir have the 
+lowest sales density
+
+
+
+### Total Sales Numbers to Foreigners with cities
+
+```{r shinny, echo=FALSE, warning=FALSE}
+library(shiny)
+library(tidyverse)
+library(ggplot2movies)
+library(ggplot2)
+
+
+set.seed(61)
+
+ui <- fluidPage(
+    titlePanel("House Sales Numbers to Foreigners 2013-2019"),
+     
+    sidebarLayout(
+        sidebarPanel(
+            selectInput("Year", "Year:",c(unique(as.character( foreign_full$Year)))),
+            selectInput("Province", "Province:",c(unique(as.character( foreign_full$Province))))
+        ),
+        
+        mainPanel(
+            plotOutput("distPlot"),
+            plotOutput("distPlot2")
+        )
+    )
+)
+
+server <- function(input, output) {
+    
+    
+    output$distPlot <- renderPlot({
+        pl_df<-
+            foreign_full%>%
+            filter(Year==input$Year & Province==input$Province)
+        
+        pl_df_line<-
+            foreign_full%>%
+            filter(Province==input$Province)        
+        
+        id_and_cities <- data_frame(id = rownames(TURKEY@data),
+                                    Province = TURKEY@data$NAME_1) %>% 
+            left_join(foreign_full, by = "Province")%>% filter(Province == input$Province)
+        
+        final_map2 <- left_join(TUR_for, id_and_cities, by = "id")
+        
+        if(input$Province != "All") {
+            pl_df<-pl_df %>% filter(Province==input$Province)
+        }
+        
+        
+        ggplot(final_map2) +
+            geom_polygon( aes(x = long, y = lat, group = group, fill = Sales_Numbers),
+                          color = "grey") +
+            coord_map() +
+            theme_void() + 
+            labs(title = " House Sales Numbers to Foreigners",
+                 subtitle = paste0("Total Sales Numbers of Houses: ",pl_df$Sales_Numbers),
+                 caption = "Source: Turkiye Istatistik Kurumu") +
+            scale_fill_distiller(name = "House Sales Numbers",
+                                 palette = "Spectral", limits = c(0,20000), na.value = "black") +
+            theme(plot.title = element_text(hjust = 0.5),
+                  plot.subtitle = element_text(hjust = 0.5))
+            })
+    
+    output$distPlot2 <- renderPlot({
+        pl_df_line<-
+            foreign_full%>%
+            filter(Province==input$Province) 
+        
+        ggplot(pl_df_line, aes(x=Year, y=Sales_Numbers))+  geom_bar(stat="identity")+  theme_minimal()+
+  labs(x="Year",y="Sales Numbers",title=paste0("Total Sales Numbers in ", pl_df_line$Province),fill="Province")+  theme(axis.text.x = element_text(angle=30))
+
+    
+    })
+
+}
+# Run the application 
+shinyApp(ui = ui, server = server)
+```
+
+
+
+## House Sales Numbers in Detail of Genders in Turkey
+
+House sales bumbers in detail of genders in Turkey covers the house sales in Turkey by men,women,common which indicates that a house is bought jointly by one or more than one woman and man and other refers to the house sales (corporate and foreign) other than those done by women and men individually or jointly.
+
+Column names are below:
+
+<ol type = "1">
+<li>Year</li>
+<li>City</li>
+<li>Male</li>
+<li>Female</li>
+<li>Common</li>
+<li>Other</li>
+<li>Total</li>
+
+
+### House Sales to men and women from 2014 to 2018
+
+```{r yearly, echo=TRUE,warning=FALSE}
+# Calculating house sales to males and females through years
+yearly <-
+raw_data_gender %>% 
+  filter(City == 'Turkiye') %>%
+  group_by(Year) %>%
+  summarise(Women = sum(Female), Men = sum(Male)) %>%
+  gather(Gender,Sales,-Year)
+
+yearly
+```
+
+```{r plt_yearly, echo = TRUE, warning=FALSE}
+ggplot(yearly, aes(Year, Sales, group = Gender, color = Gender)) + geom_line() + geom_point() +
+  scale_y_continuous(labels = comma)
+```
+
+An interesting point here is, house sales to males from 2017 through 2018 is decreasing, altough sales to female in same period is increasing. 
+
+
+
+### Cities has Highest Woman House Owners Ratio
+
+```{r female, echo=TRUE, warning=FALSE}
+top5_female <-
+  raw_data_gender %>%
+  group_by(City) %>%
+  filter(City != "Türkiye") %>%
+  summarise(Men = sum(Male), Women = sum(Female), Total = sum(Total)) %>%
+  mutate(ratio = (Women / Total) * 100) %>%
+  arrange(desc(ratio)) %>%
+  mutate(rwn = row_number()) %>%
+  filter(rwn < 6)
+
+top5_female
+```
+
+```{r plt_female, echo=TRUE, warning=FALSE}
+ggplot(top5_female, aes(x=City, y=ratio, fill=City))+
+  geom_bar(stat="identity")+
+  geom_text(aes(label = paste("%",round(ratio,3))), hjust=1.1, size=3.2)+
+  coord_flip() +
+  theme_minimal()+
+  labs(x="City",y="Percentage",title="5 Cities has Highest Woman House Owners Ratio",fill="City")
+```
+
+Balıkesir take the lead for female owners ratio among other cities while Canakkale follows. Ege, Marmara and Akdeniz are the regions has highest female house owner ratio.
+
