@@ -48,6 +48,8 @@ Variables will be as following:
   
 You can see our analysis [here](RoadRunneR-Term-Project.html)
 
+You can see our analysis [here](https://github.com/pjournal/mef03g-road-runner/blob/master/HouseSalesRoadRunner.pptx)
+
 
 ## BES ASSIGMENT - 8/11/2019
 [BES](road-runner_BES-Assignment.html)
