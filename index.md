@@ -50,13 +50,14 @@ You can see our analysis [here](RoadRunneR-Term-Project.html)
 
 You can see our presentation [here](https://github.com/pjournal/mef03g-road-runner/blob/master/HouseSalesRoadRunner.pptx)
 
+You can see our Shinny app [here](Shinny_app_house_sales_number_foreigners.R)
+
 
 ## BES ASSIGMENT - 8/11/2019
 [BES](road-runner_BES-Assignment.html)
 
 
 ## ODD ASSIGNMENT - 5/11/2019
-
 [Retail Car Sales Analysis](road-runner_ODD-Assignment.html)
 
 
